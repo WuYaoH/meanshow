@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mean">
+<head>
+    <meta charset="UTF-8">
+    <title>教务管理系统</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/animate.css/animate.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="orderController as order">
+<div class="header animated fadeIn">
+
+    <ul class="nav nav-pills">
+        <li ng-if="!order.userService.signed" class="pull-right">
+            <a class="btn" data-toggle="modal"
+               data-target="#signinModal">注册
+            </a>
+        </li>
+        <li ng-if="!order.userService.signed" class="pull-right">
+            <a class="btn" data-toggle="modal"
+               data-target="#loginModal">登陆
+            </a>
+        </li>
+
+        <li ng-if="order.userService.signed" class="pull-right">
+            <a class="btn" ng-click="order.signout()">注销</a>
+        </li>
+        <li ng-if="order.userService.signed" class="pull-right username">{{order.userService.name}}&nbsp您好!
+        </li>
+    </ul>
+
+    <div id="cont-button">
+        <div id="btn-click">
+            <button ng-if="order.userService.signed" type="button" class="btn btn-warning btn-lg" data-toggle="modal"
+                    data-target="#orderModal"
+                    ng-click="order.Order()">
+                立即订购
+            </button>
+            <button ng-if="!order.userService.signed" type="button" class="btn btn-warning btn-lg"
+                    ng-click="order.alerting()">
+                点此购买
+            </button>
+        </div>
+    </div>
+</div>
+<div class="contain">
+    <div class="content">
+        <div id="content-head"><h2 align="center">什么是可定制?</h2></div>
+        <div id="content-body">
+            <h2 align="center">为您量身打造个性教务系统</h2>
+
+            <h3 align="center">你可以浏览我们展示的功能，<br/>
+                点击立即购买，功能进入可编辑状态，您可以勾选自己需要的
+                系统功能，并且选择您想要的界面风格.</h3>
+        </div>
+    </div>
+    <div class="contain-style">
+        <div id="contain-style-head"><h2 align="center">风格概览</h2></div>
+        <div id="contain-style-body">
+            <div ng-controller="CarouselDemoCtrl">
+                <div style="height: 500px">
+                    <carousel interval="myInterval">
+                        <slide ng-repeat="slide in slides" active="slide.active">
+                            <img ng-src="{{slide.image}}" style="margin:auto;">
+                        </slide>
+                    </carousel>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="contain-func">
+        <div id="contain-func-head"><h2 align="center">功能介绍</h2></div>
+        <div id="contain-func-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="images/kemu.png" width="120px" height="120px" alt="科目管理">
+
+                        <div class="caption">
+                            <h3>科目管理</h3>
+
+                            <p>科目新增 &nbsp科目修改<br/>科目注销 </p>
+
+                            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal"
+                                  data-target="#subjectModal">详情</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="images/banqi.png" width="120px" height="120px" alt="班期管理">
+
+                        <div class="caption">
+                            <h3>班期管理</h3>
+
+                            <p>班期管理&nbsp学员报名<br/>班期排课&nbsp签到管理</p>
+
+                            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal"
+                                  data-target="#classModal">详情</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="images/kaohe.png" width="120px" height="120px" alt="考核管理">
+
+                        <div class="caption">
+                            <h3>考核管理</h3>
+
+                            <p>考核管理<br/>成绩管理</p>
+
+                            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal"
+                                  data-target="#scoreModal">详情</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="thumbnail">
+                        <img src="images/chazhao.png" width="120px" height="120px" alt="查询统计">
+
+                        <div class="caption">
+                            <h3>查询统计</h3>
+
+                            <p>科目查询&nbsp班期查询<br/>签到查询&nbsp选课查询</p>
+
+                            <p><a href="#" class="btn btn-primary" role="button" data-toggle="modal"
+                                  data-target="#searchModal">详情</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="backcolor"></div>
+</div>
+
+<div class="footer">
+    <div class="contact">
+        <p><span id="bottom" class="glyphicon glyphicon-envelope" aria-hidden="true"></span>&nbsp&nbsp&nbsp
+            山东大学软件学院实训小组<br/></p>
+    </div>
+</div>
+
+
+<script src="bower_components/jquery/dist/jquery.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-animate/angular-animate.min.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script src="app.js"></script>
+<script src="order/order.js"></script>
+<script>
+    angular.module('mean').controller('CarouselDemoCtrl', function ($scope) {
+        $scope.myInterval = 2000;
+        var slides = $scope.slides = [];
+        $scope.addSlide = function () {
+            var newWidth = 600 + slides.length + 1;
+            slides.push({
+                image: '../images/' + newWidth + '.jpg'
+            });
+        };
+        for (var i = 0; i < 4; i++) {
+            $scope.addSlide();
+        }
+    });
+</script>
+
+<script src="common/alert.js"></script>
+<script src="app.service.js"></script>
+
+
+<div alert type="danger" class="defalert" ng-show="order.showalert">
+    Error
+    <strong>请先登录！</strong>
+</div>
+
+<!--立即体验 模态框-->
+<div class="modal fade" id="orderModal" tabindex="-1" role="dialog">
+    <form ng-submit="order.submit()">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">欢迎您！订购</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="particular">
+                        <table>
+                            <tr ng-repeat="i in order.items">
+                                <td>
+                                    <label>
+                                        <input type="checkbox" id="option" ng-model="i.selected"> {{i.name}}
+                                    </label>
+                                </td>
+
+                                <td>
+                                    <label id="money"><span class="glyphicon glyphicon-yen" aria-hidden="true"></span>{{i.price}}</label>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div align="center">
+                        <label class="control-label">单位：
+                            <input class="form-inline" ng-model="order.group" required>
+                        </label>
+                    </div>
+                    <div class="allmoney">
+                        <h2>总金额：<span class="glyphicon glyphicon-yen" aria-hidden="true">{{order.totalprice()}}</span>
+                        </h2>
+                    </div>
+                    <alert ng-if="order.error" type="danger" close="order.error=!order.error">未能订购成功!</alert>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<!-- 各功能详情 -->
+<div class="modal fade" id="subjectModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">科目管理</h3>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-indent:2em">科目即为具体开设的学科。</h4>
+                <h4 style="text-indent:2em">根据科目状态来标识科目是否有效，科目状态正常的科目可以维护其信息，并在其他功能如选课、排课、签到等模块中使用。</h4>
+                <h4 style="text-indent:2em">如果某一课程今后将不再开设，可以将其注销，注销后的课程只能查询，不可以再维护或使用。</h4>
+                <h4 style="text-indent:2em">由教务人员对科目进行维护管理。对科目的描述，应至少包含科目编号、科目名称、课程具体内容等。</h4>
+                <h4 style="text-indent:2em">该模块主要实现科目新增、修改、注销。</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="classModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">班期管理</h3>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-indent:2em">
+                    可以在一个班期内完成如下功能：班期基本信息管理、班期排课、学员报名，签到管理。</h4>
+                <h4 style="text-indent:2em"> 班期基本信息管理：由教务人员对班期进行维护管理，实现班期的新增、修改、注销等功能。</h4>
+                <h4 style="text-indent:2em"> 对班期的描述应至少包含：班期编号（自动）、班期名称、详细说明、科目、授课教师、起始日期、终止日期、班期状态等。</h4>
+                <h4 style="text-indent:2em"> 班期排课：实现了课程表的功能，由教务人员对班期进行排课。以半天为一个单位，描述单位时间内进行课程的具体内容。</h4>
+                <h4 style="text-indent:2em">
+                    签到管理：由学员自己来维护自己的签到信息。选修了某一班期课程的学员，需要在班期授课时间内通过签到来记录自己的培训出勤情况，实现对于选修当前班期课程学员的出勤情况的管理，以半天为一个单位进行签到，包括新增签到，修改签到。
+                </h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="scoreModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">考核管理</h3>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-indent:2em">培训结束后需要安排考核来检查培训的效果。</h4>
+                <h4 style="text-indent:2em"> 一个班期允许多次考核。系统中需要记录历次考核的组织情况以及学员成绩，本模块包含两部分：考核管理、成绩管理。</h4>
+                <h4 style="text-indent:2em"> 考核管理：实现考核的新增、修改、结束。</h4>
+                <h4 style="text-indent:2em"> 结束考核表示本次考核相关工作均已完成，不能再修改考试信息或成绩。</h4>
+                <h4 style="text-indent:2em">成绩管理：实现成绩录入、修改、作废；</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="searchModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h3 class="modal-title">查询统计</h3>
+            </div>
+            <div class="modal-body">
+                <h4 style="text-indent:2em">拥有班期查询、科目查询、选课查询、签到查询、考核查询、成绩查询等；</h4>
+                <h4 style="text-indent:2em"> 为学员选课、教务人员组织安排培训、以及分析培训成果和学员成长情况提供信息。</h4>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--signin模态框-->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+    <form ng-submit="order.signin()">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">登录</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">用户名</label>
+                        <input ng-model="order.username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">密码</label>
+                        <input ng-model="order.password" type="password" class="form-control">
+                    </div>
+                    <alert ng-if="order.error" type="danger" close="order.error=!order.error">帐号或者密码错误</alert>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">登录</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!--register模态框-->
+<div class="modal fade" id="signinModal" tabindex="-1" role="dialog">
+    <form ng-submit="order.register()">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">注册</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">用户名</label>
+                        <input ng-model="order.username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">密码</label>
+                        <input ng-model="order.password" type="password" class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">注册</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
+
+
