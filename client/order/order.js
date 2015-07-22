@@ -57,6 +57,8 @@ function orderController(userService, $http, $timeout, $window) {
         console.log(order.username);
         console.log(order.password);
         userService.register(order.username, order.password).then(function () {
+            order.username = '';
+            order.password = '';
             console.log('username\n' + order.username + '\nregister success!');
             $('#signinModal').modal('hide');
         }, function () {
