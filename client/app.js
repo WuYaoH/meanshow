@@ -1,7 +1,8 @@
 angular.module('mean', [
+    'ngAnimate',
     'ui.bootstrap',
-    'ui.router',
-    'ngAnimate'
+    'ui.router'
+
 ])
 ;
 
